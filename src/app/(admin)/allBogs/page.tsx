@@ -3,8 +3,6 @@
 
 // const page = () => {
 //     const [cards , setCards] = useState([])
-    
-
 
 //     useEffect(()=> {
 
@@ -18,7 +16,6 @@
 
 //     getAllData()
 
-
 //     },[])
 
 //     const handleDeleted = async(slug)=> {
@@ -30,18 +27,14 @@
 //         })
 
 //         if(response.ok){
-//               setCards(prev => 
+//               setCards(prev =>
 //       prev.filter(card => card.post.metadata.slug !== slug)
 //     )
 
 //      alert("Deleted Successfully")
 //         }
 
-
 //     }
-
-
-
 
 //   return (
 //     <main className='min-h-screen  mt-6  '>
@@ -61,19 +54,23 @@
 //                         <button className='font-bold p-4 bg-red-500 w-fit rounded-xl cursor-pointer' onClick={()=> handleDeleted(card.post.metadata.slug)}>Delete</button>
 //                         </div>
 
-
 //                     </div>
 
-        
 //                 ))
 //             }
 
-
-
 //         </section>
-      
+
 //     </main>
 //   )
 // }
 
 // export default page
+
+export default function AllBlogsPage() {
+  return (
+    <div>
+      <h1>All Blogs</h1>
+    </div>
+  );
+}
