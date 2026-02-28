@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     if (!data) {
       return NextResponse.json(
         { message: "No blog data provided" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -19,32 +19,27 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       { message: "Blogs saved successfully" },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Error saving blogs:", error);
     return NextResponse.json(
       { message: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
-export async function GET() {
-  try {
-    await connectDB(); // ✅ ADD
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
 
-    const blogs = await Blog.list();
-    return NextResponse.json(blogs, { status: 200 });
-  } catch (error) {
-    console.error("Error fetching blogs:", error);
-    return NextResponse.json(
-      { message: "Internal Server Error" },
-      { status: 500 }
-    );
-  }
+  const limit = Number(searchParams.get("limit")) || 8;
+  const skip = Number(searchParams.get("skip")) || 0;
+
+  const blogs = await Blog.list(limit, skip);
+
+  return NextResponse.json(blogs);
 }
-
 
 export async function DELETE(req) {
   try {
@@ -55,23 +50,16 @@ export async function DELETE(req) {
     const deletedPost = await Blog.deleteBySlug(slug);
 
     if (!deletedPost) {
-      return NextResponse.json(
-        { message: "Blog not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: "Blog not found" }, { status: 404 });
     }
 
     return NextResponse.json(
       { message: "Blog deleted successfully" },
-      { status: 200 }
+      { status: 200 },
     );
-
   } catch (error) {
     console.log(error);
 
-    return NextResponse.json(
-      { message: "Delete failed" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Delete failed" }, { status: 500 });
   }
 }

@@ -6,7 +6,7 @@ const blogSchema = new Schema(
   {
     post: {
       metadata: {
-        slug: { type: String, required: true, index: true },
+        slug: { type: String, required: true, index: true, unique: true },
         title: { type: String, required: true },
         category: String,
         tags: { type: [String], default: [] },

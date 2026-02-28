@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 // --- HELPER FUNCTION: Fixes Broken Image URLs ---
 // This ensures relative paths (like "./blog/img.png") become full URLs
@@ -31,6 +32,28 @@ interface FeaturedProps {
 }
 
 export const Featured = ({ initialBlogs = [] }: FeaturedProps) => {
+  const [blogs, setBlogs] = useState(initialBlogs);
+  const [skip, setSkip] = useState(8);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+
+  const loadMoreBlogs = async () => {
+    if (loading || !hasMore) return;
+
+    setLoading(true);
+
+    const res = await fetch(`/api/blogs?limit=8&skip=${skip}`);
+    const newBlogs = await res.json();
+
+    if (newBlogs.length < 8) {
+      setHasMore(false);
+    } else {
+      setBlogs((prev) => [...prev, ...newBlogs]);
+      setSkip((prev) => prev + 8);
+    }
+
+    setLoading(false);
+  };
   // Animation for the container (stagger effect)
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -70,7 +93,7 @@ export const Featured = ({ initialBlogs = [] }: FeaturedProps) => {
           initial="hidden"
           animate="visible"
         >
-          {initialBlogs.map((cur) => (
+          {blogs.map((cur) => (
             <motion.div
               key={cur.post.metadata.slug}
               variants={itemVariants}
@@ -113,9 +136,15 @@ export const Featured = ({ initialBlogs = [] }: FeaturedProps) => {
 
         {/* --- BUTTON --- */}
         <div className="mt-16 text-center">
-          <button className="text-white font-semibold py-3 px-8 bg-transparent border border-gray-700 rounded-lg hover:bg-cyan-400/10 hover:border-cyan-400 transition-all duration-300 text-base">
-            Explore More Articles
-          </button>
+          {hasMore && (
+            <button
+              onClick={loadMoreBlogs}
+              disabled={loading}
+              className="text-white font-semibold py-3 px-8 bg-transparent border border-gray-700 rounded-lg hover:bg-cyan-400/10 hover:border-cyan-400 transition-all duration-300 text-base"
+            >
+              {loading ? "Loading..." : "Explore More Articles"}
+            </button>
+          )}
         </div>
       </div>
     </main>
