@@ -27,24 +27,16 @@ const blogSchema = new Schema(
       body: { type: Array, default: [] },
     },
   },
-  { timestamps: true, strict: false }
+  { timestamps: true, strict: false },
 );
 
 // 2. Model Singleton
 const BlogModel = models.Blog || model("Blog", blogSchema);
 
-
-// Here how my blog is workign and going to work okay in this eapplication 
-// UI → API Route → Blog Service → MongoDB    This eis the weay 
-
-
-
-
-
-
+// Here how my blog is workign and going to work okay in this eapplication
+// UI → API Route → Blog Service → MongoDB    This eis the weay
 
 export class Blog {
-
   static async save(blogData: any | any[]) {
     await connectDB();
     if (Array.isArray(blogData)) {
@@ -55,12 +47,16 @@ export class Blog {
     return { success: true };
   }
 
-  static async list() {
+  static async list(limit = 8, skip = 0) {
     await connectDB();
+
     const results = await BlogModel.find({})
       .sort({ "post.metadata.publishDate": -1 })
+      .skip(skip)
+      .limit(limit)
       .lean()
       .exec();
+
     return results.map(serializeDoc);
   }
 
@@ -68,7 +64,9 @@ export class Blog {
     await connectDB();
     const result = await BlogModel.findOne({
       "post.metadata.slug": slug,
-    }).lean().exec();
+    })
+      .lean()
+      .exec();
 
     if (!result) return null;
     return serializeDoc(result);
@@ -78,7 +76,7 @@ export class Blog {
   static async deleteBySlug(slug: string) {
     await connectDB();
     return await BlogModel.findOneAndDelete({
-      "post.metadata.slug": slug
+      "post.metadata.slug": slug,
     });
   }
 }
