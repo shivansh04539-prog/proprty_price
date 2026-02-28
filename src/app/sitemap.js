@@ -1,12 +1,12 @@
-import { Locality } from "../entities/Locality";
-import { Blog } from "../entities/Blog";
+import { Locality } from "../models/Locality";
+import { Blog } from "../models/Blog";
 
 export default async function sitemap() {
   // 1. BASE URL NORMALIZATION
   const baseUrl = "https://saharanpurprice.in";
 
   // 2. FETCH DATA (Direct DB call)
-  const [localities, blogs] = await Promise.all([Locality.list(), Blog.list()]);
+  const [localities, Blogs] = await Promise.all([Locality.list(), Blog.list()]);
 
   // 3. DATE SAFETY HELPER
   const getSafeDate = (dateInput) => {
@@ -22,10 +22,9 @@ export default async function sitemap() {
     priority: loc.district.includes("Noida") ? 0.9 : 0.8,
   }));
 
-  // 5. BLOG URLS (UPDATED to Capital 'B')
-  const blogUrls = blogs.map((blog) => ({
-    // ✅ CHANGED: /blogs -> /Blogs
-    url: `${baseUrl}/Blogs/${blog.slug}`,
+  // 5. BLOG URLS (FIXED to lowercase)
+  const blogUrls = Blogs.map((blog) => ({
+    url: `${baseUrl}/blogs/${blog.slug}`,
     lastModified: getSafeDate(blog.updatedAt || blog.createdAt),
     changeFrequency: "monthly",
     priority: 0.7,
@@ -39,9 +38,8 @@ export default async function sitemap() {
       changeFrequency: "daily",
       priority: 1.0,
     },
-    // ✅ CHANGED: /blogs -> /Blogs
     {
-      url: `${baseUrl}/Blogs`,
+      url: `${baseUrl}/blogs`,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 0.8,
