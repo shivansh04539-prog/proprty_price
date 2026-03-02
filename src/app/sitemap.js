@@ -1,4 +1,4 @@
-import { connectDB } from "@/lib/mongodb";
+import { connectDB } from "../../src/lib/mongodb";
 import { LocalityModel } from "../models/Locality"; // ✅ Match the export name
 import { Blog } from "../models/Blog"; // ✅ Blog is a class, so .list() works
 
