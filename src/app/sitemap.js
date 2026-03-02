@@ -1,36 +1,42 @@
-import { Locality } from "../models/Locality";
-import { Blog } from "../models/Blog";
+import { connectDB } from "@/lib/mongodb";
+import { LocalityModel } from "../models/Locality"; // ✅ Match the export name
+import { Blog } from "../models/Blog"; // ✅ Blog is a class, so .list() works
 
 export default async function sitemap() {
-  // 1. BASE URL NORMALIZATION
   const baseUrl = "https://saharanpurprice.in";
 
-  // 2. FETCH DATA (Direct DB call)
-  const [localities, Blogs] = await Promise.all([Locality.list(), Blog.list()]);
+  // 1. Connect to DB first
+  await connectDB();
 
-  // 3. DATE SAFETY HELPER
+  // 2. Fetch Data
+  // LocalityModel uses .find() because it's a raw Mongoose model
+  // Blog uses .list() because you built a class for it
+  const [localities, blogs] = await Promise.all([
+    LocalityModel.find({}).lean(),
+    Blog.list(),
+  ]);
+
   const getSafeDate = (dateInput) => {
     const date = new Date(dateInput);
     return isNaN(date.getTime()) ? new Date() : date;
   };
 
-  // 4. LOCALITY URLS
+  // 3. Localities
   const localityUrls = localities.map((loc) => ({
     url: `${baseUrl}/locality/${loc.slug}`,
     lastModified: getSafeDate(loc.last_updated),
     changeFrequency: "weekly",
-    priority: loc.district.includes("Noida") ? 0.9 : 0.8,
+    priority: 0.8,
   }));
 
-  // 5. BLOG URLS (FIXED to lowercase)
-  const blogUrls = Blogs.map((blog) => ({
+  // 4. Blogs
+  const blogUrls = blogs.map((blog) => ({
     url: `${baseUrl}/blogs/${blog.slug}`,
     lastModified: getSafeDate(blog.updatedAt || blog.createdAt),
     changeFrequency: "monthly",
     priority: 0.7,
   }));
 
-  // 6. STATIC PAGES
   const staticUrls = [
     {
       url: baseUrl,

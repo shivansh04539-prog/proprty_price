@@ -13,6 +13,6 @@ const localitySchema = new Schema(
   { timestamps: true, strict: false },
 );
 
-// Export only the model
+// Exporting the model directly
 export const LocalityModel =
   models.Locality || model("Locality", localitySchema);
