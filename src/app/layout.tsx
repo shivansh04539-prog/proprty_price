@@ -1,7 +1,7 @@
 // @ts-nocheck
 import Link from "next/link";
 import { MapPin, Home } from "lucide-react";
-import { Geist, Geist_Mono } from "next/font/google";
+  import { Geist, Geist_Mono } from "next/font/google";
 import { ReactNode } from "react";
 import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
