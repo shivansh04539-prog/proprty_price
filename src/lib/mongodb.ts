@@ -33,10 +33,12 @@ export const connectDB = async () => {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongooseInstance) => {
-      console.log("🚀 MongoDB Connected to propertyDB via Mongoose Cache");
-      return mongooseInstance;
-    });
+    cached.promise = mongoose
+      .connect(MONGODB_URI, opts)
+      .then((mongooseInstance) => {
+        // console.log("🚀 MongoDB Connected to propertyDB via Mongoose Cache");
+        return mongooseInstance;
+      });
   }
 
   try {

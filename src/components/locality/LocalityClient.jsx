@@ -37,7 +37,7 @@ export default function LocalityClient({ slug, initialData }) {
         const data = await res.json();
         setLocality(data);
       } catch (err) {
-        console.error("Error loading locality:", err);
+        // console.error("Error loading locality:", err);
         setError("Error loading locality");
       } finally {
         setIsLoading(false);

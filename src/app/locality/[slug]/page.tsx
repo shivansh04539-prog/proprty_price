@@ -8,7 +8,7 @@ async function getLocality(slug) {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/localities/${slug}`,
-      { next: { revalidate: 3600 } }
+      { next: { revalidate: 3600 } },
     );
     if (!res.ok) return null;
     return await res.json();
@@ -18,19 +18,25 @@ async function getLocality(slug) {
 }
 
 // 2. STATIC PARAMS
+// 2. STATIC PARAMS
 export async function generateStaticParams() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/localities`
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/localities?limit=100`, // Added limit to get more slugs
     );
-    const localities = await res.json();
-    return localities.map((loc) => ({ slug: loc.slug }));
+    const response = await res.json();
+
+    // ✅ FIX: Access .data because the API returns an object, not an array
+    const localities = response.data || [];
+
+    return localities.map((loc) => ({
+      slug: loc.slug,
+    }));
   } catch (error) {
     console.error("Error generating params:", error);
     return [];
   }
 }
-
 // 3. METADATA
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -123,12 +129,12 @@ export default async function LocalityPage({ params }) {
         ],
       },
       {
-  "@type": "Dataset",
-  "name": `Property Circle Rates for ${locality.name}`,
-  "description": `Government and market property valuation data for ${locality.name}, Saharanpur for the year ${currentYear}.`,
-  "license": "https://igrsup.gov.in",
-  "variableMeasured": "Price per Square Meter"
-}
+        "@type": "Dataset",
+        name: `Property Circle Rates for ${locality.name}`,
+        description: `Government and market property valuation data for ${locality.name}, Saharanpur for the year ${currentYear}.`,
+        license: "https://igrsup.gov.in",
+        variableMeasured: "Price per Square Meter",
+      },
     ],
   };
 

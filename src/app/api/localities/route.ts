@@ -6,10 +6,10 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   try {
-    console.log("--- 🏁 API START ---");
+    // console.log("--- 🏁 API START ---");
 
     await connectDB();
-    console.log("✅ MongoDB Connected");
+    // console.log("✅ MongoDB Connected");
 
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get("page") || "1");
@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     const search = searchParams.get("search") || "";
     const skip = (page - 1) * limit;
 
-    console.log(`🔎 Params: page=${page}, city=${city}, search=${search}`);
+    // console.log(`🔎 Params: page=${page}, city=${city}, search=${search}`);
 
     let queryFilter: any = {};
 
@@ -35,10 +35,10 @@ export async function GET(request: Request) {
       ];
     }
 
-    console.log(
-      "📡 Querying Database with filter:",
-      JSON.stringify(queryFilter),
-    );
+    // console.log(
+    //   "📡 Querying Database with filter:",
+    //   JSON.stringify(queryFilter),
+    // );
 
     // Execute query
     const [rawLocalities, total] = await Promise.all([
@@ -50,9 +50,9 @@ export async function GET(request: Request) {
       LocalityModel.countDocuments(queryFilter),
     ]);
 
-    console.log(
-      `📊 Found ${rawLocalities.length} documents. Total in DB: ${total}`,
-    );
+    // console.log(
+    //   `📊 Found ${rawLocalities.length} documents. Total in DB: ${total}`,
+    // );
 
     // Serialize
     const localities = rawLocalities
@@ -71,13 +71,13 @@ export async function GET(request: Request) {
               : null,
           };
         } catch (err) {
-          console.error("❌ Mapping error for doc:", doc._id);
+          // console.error("❌ Mapping error for doc:", doc._id);
           return null;
         }
       })
       .filter(Boolean);
 
-    console.log("✅ Serialization Complete. Sending Response.");
+    // console.log("✅ Serialization Complete. Sending Response.");
 
     return NextResponse.json({
       data: localities,
@@ -89,8 +89,8 @@ export async function GET(request: Request) {
     });
   } catch (error: any) {
     // THIS IS THE IMPORTANT LOG
-    console.error("🔥 CRITICAL API ERROR:", error.message);
-    console.error(error.stack);
+    // console.error("🔥 CRITICAL API ERROR:", error.message);
+    // console.error(error.stack);
     return NextResponse.json(
       { message: error.message || "Internal Error" },
       { status: 500 },

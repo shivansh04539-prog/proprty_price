@@ -42,16 +42,16 @@ export default function SearchableLocalities({
     const fetchResults = async () => {
       setIsSearching(true);
       try {
-        console.log("🔍 Searching:", debouncedSearchTerm, activeCity);
+        // console.log("🔍 Searching:", debouncedSearchTerm, activeCity);
         const res = await fetch(
           `/api/localities?search=${encodeURIComponent(debouncedSearchTerm)}&city=${activeCity}&limit=50`,
         );
-        console.log("📩 Search status:", res.status);
+        // console.log("📩 Search status:", res.status);
         const json = await res.json();
-        console.log("📦 Search raw:", json);
+        // console.log("📦 Search raw:", json);
         setSearchResults(json.data || []);
       } catch (error) {
-        console.error("Search failed:", error);
+        // console.error("Search failed:", error);
       } finally {
         setIsSearching(false);
       }

@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       { status: 201 },
     );
   } catch (error) {
-    console.error("Error saving blogs:", error);
+    // console.error("Error saving blogs:", error);
     return NextResponse.json(
       { message: "Internal Server Error" },
       { status: 500 },
@@ -58,7 +58,7 @@ export async function DELETE(req) {
       { status: 200 },
     );
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     return NextResponse.json({ message: "Delete failed" }, { status: 500 });
   }
