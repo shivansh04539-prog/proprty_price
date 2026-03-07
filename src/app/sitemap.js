@@ -2,6 +2,8 @@ import { connectDB } from "../../src/lib/mongodb";
 import { LocalityModel } from "../models/Locality"; // ✅ Match the export name
 import { Blog } from "../models/Blog"; // ✅ Blog is a class, so .list() works
 
+export const revalidate = 43200; // Re-generates the sitemap every 12 hours
+
 export default async function sitemap() {
   const baseUrl = "https://saharanpurprice.in";
 

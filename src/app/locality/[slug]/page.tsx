@@ -3,6 +3,8 @@ import LocalityClient from "@/components/locality/LocalityClient";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
+export const dynamicParams = true;
+
 // 1. DATA FETCHING (Cached for 1 hour)
 async function getLocality(slug) {
   try {
@@ -61,6 +63,18 @@ export async function generateMetadata({ params }) {
   };
 }
 
+
+
+  // openGraph: {
+  //   title: `Property Rates in ${locality.name}`,
+  //   description: `Check latest govt and market rates for ${locality.name}.`,
+  //   images: [`/api/og?name=${locality.name}`], // If you have a dynamic OG image route
+  // },
+
+  // what i tell where i place teach me 
+
+
+
 // 4. MAIN PAGE COMPONENT
 export default async function LocalityPage({ params }) {
   const { slug } = await params;
@@ -106,24 +120,76 @@ export default async function LocalityPage({ params }) {
           latitude: locality.lat || "29.9640",
           longitude: locality.lng || "77.5460",
         },
+        areaServed: {
+          "@type": "City",
+          name: "Saharanpur",
+        },
+        containedInPlace: {
+          "@type": "City",
+          name: "Saharanpur",
+        },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          cssSelector: ["h1", "p"],
+        },
       },
       {
         "@type": "FAQPage",
         mainEntity: [
           {
             "@type": "Question",
-            name: `What is the government circle rate in ${locality.name}?`,
+            name: `What is the circle rate in ${locality.name} in ${currentYear}?`,
             acceptedAnswer: {
               "@type": "Answer",
-              text: `As of ${currentYear}, the government circle rate for residential land in ${locality.name} is ₹${govtRate} per square meter.`,
+              text: `The government circle rate for residential land in ${locality.name}, Saharanpur is ₹${govtRate} per square meter according to official records.`,
             },
           },
           {
             "@type": "Question",
-            name: `Is property in ${locality.name} expensive?`,
+            name: `What is the market price of property in ${locality.name}?`,
             acceptedAnswer: {
               "@type": "Answer",
-              text: `Properties in ${locality.name} vary by location. While the government rate is ₹${govtRate}, market rates can be higher depending on proximity to main roads.`,
+              text: `Market prices in ${locality.name} may vary depending on road access, development level, and demand. In many cases market rates are higher than government circle rates.`,
+            },
+          },
+          {
+            "@type": "Question",
+            name: `Is ${locality.name} a good place to buy property in Saharanpur?`,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: `${locality.name} is considered a developing area in Saharanpur with residential and commercial property opportunities depending on location and infrastructure.`,
+            },
+          },
+          {
+            "@type": "Question",
+            name: `How is stamp duty calculated for property in ${locality.name}?`,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: `Stamp duty in Uttar Pradesh is calculated based on the higher of the transaction value or the government circle rate determined for ${locality.name}.`,
+            },
+          },
+          {
+            "@type": "Question",
+            name: `Saharanpur me property investment ke liye ${locality.name} kaisa area hai?`,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: `${locality.name} Saharanpur ka ek developing area hai jahan residential plots aur commercial properties available hain. Infrastructure aur road connectivity ke hisaab se yeh area property investment ke liye consider kiya ja sakta hai.`,
+            },
+          },
+          {
+            "@type": "Question",
+            name: `Saharanpur me ghar ya plot kharidne ke liye ${locality.name} acha location hai kya?`,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: `${locality.name} Saharanpur ke popular residential areas me se ek hai. Yahan plots aur houses available hote hain aur government circle rate ke basis par property registration hota hai.`,
+            },
+          },
+          {
+            "@type": "Question",
+            name: `${locality.name} Saharanpur me zameen ka rate kya hai?`,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: `${currentYear} me ${locality.name}, Saharanpur ka government circle rate residential land ke liye lagbhag ₹${govtRate} per square meter hai. Market rate location aur road connectivity ke hisaab se alag ho sakta hai.`,
             },
           },
         ],

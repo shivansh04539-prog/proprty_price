@@ -67,7 +67,7 @@ export default function Footer() {
           <span className="text-gray-400">|</span>
 
           <a
-            href="https://www.instagram.com/shivanshdevloper"
+            href="https://www.instagram.com/saharanpur_realstate"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 hover:text-green-600 transition-colors"

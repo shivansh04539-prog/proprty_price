@@ -1,13 +1,18 @@
 "use client";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Home, Menu, X } from "lucide-react";
+import { MapPin, Home, Menu, X, Building2 } from "lucide-react";
 import { FaBlogger } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Header() {
   const homeLink = "/";
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "auto";
+  }, [mobileOpen]);
 
   return (
     <motion.header
@@ -16,86 +21,146 @@ export default function Header() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <div className="max-w-6xl mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo + Title */}
-          <Link href={homeLink} className="flex items-center gap-3">
+      <div className="max-w-6xl mx-auto px-4 py-3 sm:py-4">
+        <div className="flex items-center justify-between gap-2">
+          {/* Logo - Added flex-shrink-0 to prevent squishing */}
+          <Link
+            href={homeLink}
+            className="flex items-center gap-2 sm:gap-3 flex-shrink-0"
+          >
             <motion.div
-              className="w-10 h-10 bg-gradient-to-br from-slate-700 to-teal-600 rounded-xl flex items-center justify-center"
+              className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-slate-700 to-teal-600 rounded-xl flex items-center justify-center"
               whileHover={{ rotate: 10, scale: 1.1 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <MapPin className="w-6 h-6 text-white" />
+              <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </motion.div>
-            <div>
-              {/* ✅ SEO FIX: Changed <h1> to <div> to prevent "Multiple H1" errors */}
-              <div className="text-xl font-bold text-gray-900">
+
+            <div className="min-w-0">
+              {" "}
+              {/* min-w-0 helps with text truncation if needed */}
+              <div className="text-base sm:text-xl font-bold text-gray-900 leading-tight">
                 Saharanpur Properties
               </div>
-              <p className="text-sm text-gray-500">Property Price Directory</p>
+              <p className="text-[10px] sm:text-sm text-gray-500">
+                Property Price Directory
+              </p>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
-            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href={homeLink}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors text-gray-600 hover:text-teal-600 hover:bg-teal-50"
-              >
-                <Home className="w-4 h-4" /> Home
-              </Link>
-            </motion.div>
-
-            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href="/Blogs"
-                className="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors text-gray-600 hover:text-teal-600 hover:bg-teal-50"
-              >
-                <FaBlogger className="w-4 h-4" />
-                Market Trends (Blogs)
-              </Link>
-            </motion.div>
-          </nav>
-
-          {/* Mobile Hamburger */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setMobileOpen((prev) => !prev)}
-              className="p-2 rounded-md text-gray-700 hover:bg-gray-100"
+          {/* Right Side */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Desktop Navigation */}
+            <nav
+              aria-label="Main Navigation"
+              className="hidden md:flex items-center gap-4 lg:gap-6"
             >
-              {mobileOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  href={homeLink}
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-gray-600 hover:text-teal-600 hover:bg-teal-50"
+                >
+                  <Home className="w-4 h-4" /> Home
+                </Link>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  href="/blogs"
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-gray-600 hover:text-teal-600 hover:bg-teal-50"
+                >
+                  <FaBlogger className="w-4 h-4" /> Blogs
+                </Link>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  href="/properties"
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-gray-600 hover:text-teal-600 hover:bg-teal-50"
+                >
+                  <Building2 className="w-4 h-4" /> Properties
+                </Link>
+              </motion.div>
+            </nav>
+
+            {/* Desktop Contact Button */}
+            <Link
+              href="/contact"
+              className="hidden md:inline-block bg-blue-500 hover:bg-blue-600 rounded-md py-2 px-4 text-sm font-medium text-white transition-colors"
+            >
+              Contact Us
+            </Link>
+
+            {/* Mobile Hamburger - Increased hit area for better UX */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setMobileOpen((prev) => !prev)}
+                className="p-2 -mr-2 rounded-md text-gray-700 hover:bg-gray-100 transition"
+                aria-label="Toggle Menu"
+              >
+                {mobileOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Dropdown */}
         <AnimatePresence>
           {mobileOpen && (
             <motion.nav
-              className="md:hidden mt-4 flex flex-col gap-3 bg-gray-50 p-4 rounded-lg shadow-md"
+              aria-label="Mobile Navigation"
+              className="md:hidden mt-3 flex flex-col gap-1 bg-gray-50 p-3 rounded-xl shadow-lg border border-gray-100"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.2 }}
             >
               <Link
                 href={homeLink}
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-white hover:text-teal-600 transition-all"
               >
-                <Home className="w-4 h-4" /> Home
+                <Home className="w-5 h-5 text-gray-400" />
+                <span className="font-medium">Home</span>
               </Link>
+
               <Link
-                href="/Blogs"
+                href="/blogs"
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-white hover:text-teal-600 transition-all"
               >
-                <FaBlogger className="w-4 h-4" /> Blogs
+                <FaBlogger className="w-5 h-5 text-gray-400" />
+                <span className="font-medium">Blogs</span>
+              </Link>
+
+              <Link
+                href="/properties"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-white hover:text-teal-600 transition-all"
+              >
+                <Building2 className="w-5 h-5 text-gray-400" />
+                <span className="font-medium">Properties</span>
+              </Link>
+
+              <Link
+                href="/contact"
+                onClick={() => setMobileOpen(false)}
+                className="mt-2 w-full px-4 py-3 rounded-lg bg-blue-500 text-white text-center font-semibold shadow-md active:scale-95 transition-transform"
+              >
+                Contact Us
               </Link>
             </motion.nav>
           )}
