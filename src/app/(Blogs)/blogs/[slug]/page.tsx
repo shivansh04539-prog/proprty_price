@@ -38,7 +38,7 @@ const getVerifiedPath = (originalPath: string) => {
 
 // --- HELPER 1: For Google/SEO (Full HTTPS link) ---
 const getSeoUrl = (path: string) => {
-  const baseUrl = "https://port.saharanpurprice.in";
+  const baseUrl = "https://saharanpurprice.in";
   const verifiedPath = getVerifiedPath(path);
 
   if (verifiedPath.startsWith("http")) return verifiedPath;
@@ -74,7 +74,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
     openGraph: {
       title: metadata.title,
       description: metadata.summary,
-      url: `https://port.saharanpurprice.in/blogs/${decodedSlug}`,
+      url: `https://saharanpurprice.in/blogs/${decodedSlug}`,
       images: [
         {
           url: seoImageUrl,
@@ -128,12 +128,12 @@ const SingleBlogPage = async ({ params }) => {
     "author": {
       "@type": "Person",
       "name": authorName,
-      "url": metadata.author?.url || "https://port.saharanpurprice.in/about",
+      "url": metadata.author?.url || "https://saharanpurprice.in/about",
     },
     "publisher": {
       "@type": "Organization",
       "name": "Saharanpur Price",
-      "logo": { "@type": "ImageObject", "url": "https://port.saharanpurprice.in/icon.png" }
+      "logo": { "@type": "ImageObject", "url": "https://saharanpurprice.in/icon.png" }
     },
     "description": metadata.summary,
   };

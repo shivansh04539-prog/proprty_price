@@ -21,7 +21,7 @@ const blogSchema = new Schema(
         // 👇 NEW: Author Field (Safe for old posts too)
         author: {
           name: { type: String, default: "Shivansh" },
-          url: { type: String, default: "https://port.saharanpurprice.in/about" },
+          url: { type: String, default: "https://www.saharanpurprice.in/about" },
         },
       },
       body: { type: Array, default: [] },

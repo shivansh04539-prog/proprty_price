@@ -8,7 +8,7 @@ import { useState } from "react";
 // This ensures relative paths (like "./blog/img.png") become full URLs
 const getAbsoluteUrl = (path: string) => {
   // You can change this to your actual production domain
-  const baseUrl = "https://port.saharanpurprice.in";
+  const baseUrl = "https://www.saharanpurprice.in";
 
   // 1. If empty, return a default placeholder
   if (!path) return `${baseUrl}/main.png`;

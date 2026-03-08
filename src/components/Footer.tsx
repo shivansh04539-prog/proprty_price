@@ -57,7 +57,7 @@ export default function Footer() {
           <span className="text-gray-400 hidden sm:inline">|</span>
 
           <a
-            href="https://port.saharanpurprice.in"
+            href="https://www.saharanpurprice.in"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-green-600 transition-colors"

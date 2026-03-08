@@ -66,7 +66,7 @@ export const metadata = {
     "residential plots",
     "commercial shops",
   ],
-  metadataBase: new URL("https://port.saharanpurprice.in"),
+  metadataBase: new URL("https://saharanpurprice.in"),
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
@@ -76,7 +76,7 @@ export const metadata = {
     title: "Property Rates in Saharanpur & Noida | Govt & Market Prices",
     description:
       "Official government and market property rates in Saharanpur and Noida Sectors.",
-    url: "https://port.saharanpurprice.in/",
+    url: "https://saharanpurprice.in/",
     type: "website",
     locale: "en_IN",
     siteName: "Saharanpur Price",
@@ -108,12 +108,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Saharanpur Price Directory",
-    url: "https://port.saharanpurprice.in",
+    url: "https://www.saharanpurprice.in",
     potentialAction: {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: "https://port.saharanpurprice.in?search={search_term_string}",
+        urlTemplate: "https://www.saharanpurprice.in?search={search_term_string}",
       },
       "query-input": "required name=search_term_string",
     },
@@ -125,7 +125,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <link
           rel="sitemap"
           type="application/xml"
-          href="https://port.saharanpurprice.in/sitemap.xml"
+          href="https://www.saharanpurprice.in/sitemap.xml"
         />
         <link rel="icon" href="/icon.png" />
       </head>

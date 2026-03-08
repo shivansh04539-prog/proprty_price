@@ -6,7 +6,7 @@ import { getAllProperties} from "../actions/getPropertie/properties";
 export const revalidate = 43200; // Re-generates the sitemap every 12 hours
 
 export default async function sitemap() {
-  const baseUrl = "https://port.saharanpurprice.in";
+  const baseUrl = "https://www.saharanpurprice.in";
 
   // 1. Connect to DB first
   await connectDB();

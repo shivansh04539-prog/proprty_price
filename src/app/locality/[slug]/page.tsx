@@ -49,7 +49,7 @@ export async function generateMetadata({ params }) {
   if (!locality) return { title: "Locality Not Found" };
 
   // FIX: Define baseUrl so the code doesn't crash
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://port.saharanpurprice.in";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.saharanpurprice.in";
 
   const locationText = locality.tehsil
     ? `${locality.name}, ${locality.tehsil}`
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }) {
       title,
       description,
       url: `${baseUrl}/locality/${locality.slug}`,
-      siteName: 'https://port.saharanpurprice.in',
+      siteName: 'https://www.saharanpurprice.in',
       locale: 'en_IN',
       type: 'website',
       images: [
