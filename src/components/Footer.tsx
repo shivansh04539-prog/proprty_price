@@ -18,7 +18,8 @@ export default function Footer() {
           © {new Date().getFullYear()} Saharanpur Properties. Property rates
           updated regularly.
         </p>
-        <p className="text-gray-500 text-xs mt-2 max-w-lg mx-auto leading-relaxed">
+
+        <p className="text-gray-500 text-xs mt-2 max-w-lg mx-auto leading-relaxed px-2">
           Government rates as per SRO notifications. Market rates are estimates
           only.
         </p>
@@ -35,7 +36,7 @@ export default function Footer() {
 
         {/* --- Contact / Credit Section --- */}
         <motion.div
-          className="flex items-center justify-center gap-2 text-gray-700 mt-6 text-sm bg-gray-50 py-2 px-4 rounded-full inline-flex border border-gray-100"
+          className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-gray-700 mt-6 text-xs sm:text-sm bg-gray-50 py-3 px-4 rounded-xl border border-gray-100 max-w-full"
           whileHover={{ scale: 1.05 }}
         >
           <FaPhoneAlt className="text-green-600 text-xs" />
@@ -44,7 +45,7 @@ export default function Footer() {
             Made by Shivansh Singh
           </span>
 
-          <span className="text-gray-400">|</span>
+          <span className="text-gray-400 hidden sm:inline">|</span>
 
           <a
             href="tel:+917618550475"
@@ -53,7 +54,7 @@ export default function Footer() {
             +91 761855 0475
           </a>
 
-          <span className="text-gray-400">|</span>
+          <span className="text-gray-400 hidden sm:inline">|</span>
 
           <a
             href="https://port.saharanpurprice.in"
@@ -64,7 +65,7 @@ export default function Footer() {
             Portfolio
           </a>
 
-          <span className="text-gray-400">|</span>
+          <span className="text-gray-400 hidden sm:inline">|</span>
 
           <a
             href="https://www.instagram.com/saharanpur_realstate"
