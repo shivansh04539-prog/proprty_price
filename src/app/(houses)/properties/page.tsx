@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Properties from "@/components/(properties)/Properties";
 import { useState, useEffect } from "react";
-import { getAllProperties } from "@/actions/getPropertie/properties";
+import { getAllProperties } from "@/actions/(admin)/getPropertie/properties";
 
 const Page = () => {
   const [searchValue, setSearchValue] = useState("");

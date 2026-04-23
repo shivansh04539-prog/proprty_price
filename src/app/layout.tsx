@@ -11,6 +11,8 @@ import Script from "next/script";
 import WhatsAppButton from "@/components/common/WhatsAppButton";
 import Footer from "@/components/Footer";
 import Header from "@/components/Navbar";
+import { AuthProvider } from "@/context/AuthContext";
+import NavbarWrapper from "@/components/NavbarWrapper";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
@@ -47,6 +49,9 @@ export const metadata = {
     // Top Performing Saharanpur Keywords
     "Saharanpur property rates",
     "circle rate saharanpur 2025",
+    "saharanpur circle rate list 2026",
+    "saharanpur circle rate 2025 pdf download",
+    "सर्किल रेट लिस्ट सहारनपुर 2025",
     "saharanpur property market",
     "land prices Saharanpur",
     "saharanpur circle rate",
@@ -121,6 +126,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <html lang="en">
+      <AuthProvider>
       <head>
         <link
           rel="sitemap"
@@ -140,12 +146,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {/* ✅ FIXED: Script moved to body to prevent hydration errors */}
        
 
-        <Header />
+        <NavbarWrapper />
         <main className="flex-1">{children}</main>
         <Footer />
         <WhatsAppButton phoneNumber="917618550475" />
         <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
       </body>
+      </AuthProvider>
     </html>
   );
 }

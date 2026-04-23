@@ -1,9 +1,14 @@
 "use client";
-import PropUpload from "@/actions/(admin)/propUpload/prop.actions";
+import PropUpload from "@/actions/(dealer)/prop.actions";
 import React, { useState } from "react";
 import { LuImageUp } from "react-icons/lu";
+// NEW: Import your Auth Hook (Adjust the path to where your context is located!)
+import { useAuth } from "@/context/AuthContext"; 
 
-const AddPropertyPage = () => {
+const page = () => {
+  // NEW: Get the user from AuthContext
+  const { user } = useAuth(); 
+
   const amenitiesList = [
     "Swimming Pool",
     "Parking",
@@ -63,6 +68,11 @@ const AddPropertyPage = () => {
         </h1>
 
         <form className="grid lg:grid-cols-3 gap-8" onSubmit={handleSubmit}>
+          
+          {/* NEW: Hidden input to securely send the dealer's unique ID with the FormData */}
+          {/* Note: Change user._id to user.id if your auth object uses .id instead */}
+          <input type="hidden" name="dealerId" value={user?._id || user?.id || ""} />
+
           {/* LEFT SIDE: Core Details */}
           <section className="lg:col-span-2 bg-white rounded-2xl shadow-lg p-8 space-y-6">
             <h2 className="text-xl font-semibold border-b pb-2">
@@ -74,7 +84,15 @@ const AddPropertyPage = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Owner/Dealer Name <span className="text-red-500">*</span>
                 </label>
-                <input name="name" type="text" placeholder="e.g. John Doe" className="p-3 border rounded-lg w-full" required />
+                <input 
+                  name="name" 
+                  type="text" 
+                  defaultValue={user?.name || ""} // NEW: Autofill with user name
+                  placeholder="e.g. John Doe" 
+                  className="p-3 border rounded-lg w-full bg-slate-50" 
+                  required 
+                  readOnly // NEW: Optional, keeps the user from changing their official dealer name
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -134,7 +152,6 @@ const AddPropertyPage = () => {
                 </label>
                 <input name="area" type="number" placeholder="Area" className="p-3 border rounded-lg w-full" required />
               </div>
-              {/* NOW OPTIONAL */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Bedrooms (Optional)
@@ -150,7 +167,6 @@ const AddPropertyPage = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              {/* NOW OPTIONAL */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Built Year (Optional)
@@ -184,7 +200,6 @@ const AddPropertyPage = () => {
               </div>
             </div>
 
-            {/* NOW OPTIONAL */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Description (Optional)
@@ -233,4 +248,4 @@ const AddPropertyPage = () => {
   );
 };
 
-export default AddPropertyPage;
+export default page;

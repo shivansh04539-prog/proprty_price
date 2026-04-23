@@ -204,8 +204,17 @@ export default async function Home({
               {loc.name} {loc.tehsil ? `(${loc.tehsil})` : ""}
             </Link>
           ))}
+
+           <div className="max-w-7xl mx-auto px-4 flex justify-between">
+  
+    <a href="/pdf" className="hover:text-slate-600 transition-colors underline decoration-slate-200 mt-2">
+      UP District-wise Property Rate List Directory (PDF)
+    </a>
+  </div>
         </div>
       </footer>
+
+    
     </div>
   );
 }

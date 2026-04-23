@@ -1,7 +1,7 @@
 import { Calendar, FileText, MapPin, Home } from "lucide-react";
 import Link from "next/link";
 import { format } from "date-fns";
-import { getAllProperties } from '@/actions/getPropertie/properties';
+import { getAllProperties } from '@/actions/(admin)/getPropertie/properties';
 import Image from "next/image";
 import { FaLocationDot, FaBath, FaBed, FaRulerCombined } from "react-icons/fa6";
 

@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { FaLocationDot, FaBath, FaBed, FaRulerCombined } from "react-icons/fa6";
 import Link from "next/link";
-import { getParticularData } from "@/actions/getPropertie/properties";
+import { getParticularData } from "@/actions/(admin)/getPropertie/properties";
 import { notFound } from "next/navigation";
 
 import { Metadata } from "next";

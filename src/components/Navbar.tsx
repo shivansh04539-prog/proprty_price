@@ -1,14 +1,20 @@
 "use client";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Home, Menu, X, Building2 } from "lucide-react";
+// NEW: Added 'Shield' to the lucide-react imports for the admin icon
+import { MapPin, Home, Menu, X, Building2, Shield } from "lucide-react";
 import { FaBlogger } from "react-icons/fa";
 import { useState, useEffect } from "react";
+// NEW: Import your Auth Hook (Adjust this path to where your context is actually located!)
+import { useAuth } from "@/context/AuthContext";
 
 export default function Header() {
   const homeLink = "/";
   const [mobileOpen, setMobileOpen] = useState(false);
-
+  
+  // NEW: Get the logged-in user from your AuthContext
+  const { user } = useAuth();
+   
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "auto";
@@ -55,19 +61,6 @@ export default function Header() {
               aria-label="Main Navigation"
               className="hidden md:flex items-center gap-4 lg:gap-6"
             >
-              {/* <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Link
-                  href={homeLink}
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-gray-600 hover:text-teal-600 hover:bg-teal-50"
-                >
-                  <Home className="w-4 h-4" /> Home
-                </Link>
-                
-              </motion.div> */}
-
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -91,6 +84,34 @@ export default function Header() {
                   <Building2 className="w-4 h-4" /> Properties
                 </Link>
               </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  href="/dealer"
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-gray-600 hover:text-teal-600 hover:bg-teal-50"
+                >
+                  <Building2 className="w-4 h-4" /> Dealers
+                </Link>
+              </motion.div>
+
+              {/* NEW: Admin Link for Desktop - Only shows if user exists */}
+              {user && (
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Link
+                    href="/admin"
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-gray-600 hover:text-teal-600 hover:bg-teal-50"
+                  >
+                    <Shield className="w-4 h-4" /> Admin
+                  </Link>
+                </motion.div>
+              )}
+
             </nav>
 
             {/* Desktop Contact Button */}
@@ -129,15 +150,6 @@ export default function Header() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
             >
-              {/* <Link
-                href={homeLink}
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-white hover:text-teal-600 transition-all"
-              >
-                <Home className="w-5 h-5 text-gray-400" />
-                <span className="font-medium">Home</span>
-              </Link> */}
-
               <Link
                 href="/blogs"
                 onClick={() => setMobileOpen(false)}
@@ -155,6 +167,18 @@ export default function Header() {
                 <Building2 className="w-5 h-5 text-gray-400" />
                 <span className="font-medium">Properties</span>
               </Link>
+
+              {/* NEW: Admin Link for Mobile - Only shows if user exists */}
+              {user && (
+                <Link
+                  href="/admin"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-white hover:text-teal-600 transition-all"
+                >
+                  <Shield className="w-5 h-5 text-gray-400" />
+                  <span className="font-medium">Admin</span>
+                </Link>
+              )}
 
               <Link
                 href="/contact"
